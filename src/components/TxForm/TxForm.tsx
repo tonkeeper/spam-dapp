@@ -40,18 +40,23 @@ export function TxForm() {
 
   const wallet = useTonWallet();
   const [spamInterval, setSpamInterval] = useState(10000);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
   const [tonConnectUi] = useTonConnectUI();
 
   const onStartSpamming = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
     tonConnectUi.sendTransaction(tx);
-    setInterval(() => {
+    setIntervalId(setInterval(() => {
       try {
         tonConnectUi.sendTransaction(tx);
       } catch (error) {
         console.error(error);
       }
-    }, spamInterval);
+    }, spamInterval));
   }
 
   return (
