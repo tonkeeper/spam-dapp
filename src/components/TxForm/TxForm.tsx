@@ -44,6 +44,7 @@ export function TxForm() {
   const [tonConnectUi] = useTonConnectUI();
 
   const onStartSpamming = () => {
+    tonConnectUi.sendTransaction(tx);
     setInterval(() => {
       try {
         tonConnectUi.sendTransaction(tx);
