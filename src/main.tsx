@@ -20,7 +20,7 @@ async function enableMocking() {
       onUnhandledRequest: 'bypass',
       quiet: false,
       serviceWorker: {
-        url: `${import.meta.env.VITE_GH_PAGES ? '/demo-dapp-with-react-ui' : ''}/mockServiceWorker.js`
+        url: `${import.meta.env.VITE_GH_PAGES ? '/spam-dapp' : ''}/mockServiceWorker.js`
       }
     });
     let serviceWorkerRegistration: ServiceWorkerRegistration | null | void = await startMockWorker();
