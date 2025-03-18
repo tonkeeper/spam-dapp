@@ -39,26 +39,33 @@ export function TxForm() {
   const [tx, setTx] = useState(defaultTx);
 
   const wallet = useTonWallet();
+  const [spamInterval, setSpamInterval] = useState(10000);
 
   const [tonConnectUi] = useTonConnectUI();
 
-  const onChange = useCallback((value: InteractionProps) => {
-    setTx(value.updated_src as SendTransactionRequest)
-  }, []);
+  const onStartSpamming = () => {
+    setInterval(() => {
+      try {
+        tonConnectUi.sendTransaction(tx);
+      } catch (error) {
+        console.error(error);
+      }
+    }, spamInterval);
+  }
 
   return (
     <div className="send-tx-form">
-      <h3>Configure and send transaction</h3>
+      <h3>Config</h3>
 
-      <ReactJson theme="ocean" src={defaultTx} onEdit={onChange} onAdd={onChange} onDelete={onChange}/>
+      <input type="text" placeholder="Spam interval" value={spamInterval} onChange={(e) => parseInt(e.target.value) && setSpamInterval(parseInt(e.target.value))} />
 
       {wallet ? (
-        <button onClick={() => tonConnectUi.sendTransaction(tx)}>
-          Send transaction
+        <button onClick={onStartSpamming}>
+          Start spamming
         </button>
       ) : (
         <button onClick={() => tonConnectUi.openModal()}>
-          Connect wallet to send the transaction
+          Connect wallet to start spamming
         </button>
       )}
     </div>
