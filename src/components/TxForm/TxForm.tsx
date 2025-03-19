@@ -75,7 +75,7 @@ export function TxForm() {
   return (
     <>
       <div className="send-tx-form">
-        <h3>Config</h3>
+        <h3>Spamming interval</h3>
 
         <input type="text" placeholder="Spam interval" value={spamInterval} onChange={(e) => parseInt(e.target.value) && setSpamInterval(parseInt(e.target.value))} />
 
