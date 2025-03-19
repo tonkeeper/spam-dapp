@@ -41,6 +41,7 @@ export function TxForm() {
   const wallet = useTonWallet();
   const [spamInterval, setSpamInterval] = useState(10000);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const [numOfMessages, setNumOfMessages] = useState(1);
 
   const [tonConnectUi] = useTonConnectUI();
 
@@ -59,22 +60,51 @@ export function TxForm() {
     }, spamInterval));
   }
 
+  const sendMessages = () => {
+    if (!wallet?.account.address) return;
+    let txToSend = {
+      validUntil: Math.floor(Date.now() / 1000) + 600,
+      messages: Array.from({length: numOfMessages}, (_, i) => ({
+        address: wallet?.account.address,
+        amount: '10000',  
+      })),
+    };
+    tonConnectUi.sendTransaction(txToSend);
+  }
+  
   return (
-    <div className="send-tx-form">
-      <h3>Config</h3>
+    <>
+      <div className="send-tx-form">
+        <h3>Config</h3>
 
-      <input type="text" placeholder="Spam interval" value={spamInterval} onChange={(e) => parseInt(e.target.value) && setSpamInterval(parseInt(e.target.value))} />
+        <input type="text" placeholder="Spam interval" value={spamInterval} onChange={(e) => parseInt(e.target.value) && setSpamInterval(parseInt(e.target.value))} />
 
-      {wallet ? (
-        <button onClick={onStartSpamming}>
-          Start spamming
-        </button>
-      ) : (
-        <button onClick={() => tonConnectUi.openModal()}>
-          Connect wallet to start spamming
-        </button>
-      )}
-    </div>
+        {wallet ? (
+          <button onClick={onStartSpamming}>
+            Start spamming
+          </button>
+        ) : (
+          <button onClick={() => tonConnectUi.openModal()}>
+            Connect wallet to start spamming
+          </button>
+        )}
+      </div>
+      <div className="send-tx-form">
+        <h3>Num of messages</h3>
+
+        <input type="text" placeholder="Number of messages" value={numOfMessages} onChange={(e) => parseInt(e.target.value) && setNumOfMessages(parseInt(e.target.value))} />
+
+        {wallet ? (
+          <button onClick={sendMessages}>
+            Send messages
+          </button>
+        ) : (
+          <button onClick={() => tonConnectUi.openModal()}>
+            Connect wallet to start spamming
+          </button>
+        )}
+      </div>
+    </>
   );
 }
 
