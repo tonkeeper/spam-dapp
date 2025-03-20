@@ -42,6 +42,7 @@ export function TxForm() {
   const [spamInterval, setSpamInterval] = useState(10000);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [numOfMessages, setNumOfMessages] = useState(1);
+  const [error, setError] = useState<string | null>(null);
 
   const [tonConnectUi] = useTonConnectUI();
 
@@ -61,6 +62,7 @@ export function TxForm() {
   }
 
   const sendMessages = () => {
+    setError(null);
     if (!wallet?.account.address) return;
     let txToSend = {
       validUntil: Math.floor(Date.now() / 1000) + 600,
@@ -69,7 +71,10 @@ export function TxForm() {
         amount: '10000',  
       })),
     };
-    tonConnectUi.sendTransaction(txToSend);
+    tonConnectUi.sendTransaction(txToSend).catch((error) => {
+      setError(error.message);
+    });
+
   }
   
   return (
@@ -104,6 +109,7 @@ export function TxForm() {
           </button>
         )}
       </div>
+      {error && <div className="error">{error}</div>}
     </>
   );
 }
