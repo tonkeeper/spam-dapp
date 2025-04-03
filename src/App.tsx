@@ -5,8 +5,13 @@ import {TxForm} from "./components/TxForm/TxForm";
 import {Footer} from "./components/Footer/Footer";
 import {TonProofDemo} from "./components/TonProofDemo/TonProofDemo";
 import {CreateJettonDemo} from "./components/CreateJettonDemo/CreateJettonDemo";
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    window.close();
+  }, []);
+
   return (
       <TonConnectUIProvider
           manifestUrl="https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json"
