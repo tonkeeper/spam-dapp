@@ -65,6 +65,7 @@ export function TxForm() {
     setError(null);
     if (!wallet?.account.address) return;
     let txToSend = {
+      returnStrategy: "https://fragment.com",
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: Array.from({length: numOfMessages}, (_, i) => ({
         address: wallet?.account.address,
