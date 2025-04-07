@@ -11,9 +11,9 @@ function App() {
   
   useEffect(() => {
     // @ts-ignore
-    window.enableLandscapeMode?.();
+    window.tonkeeper?.unlockOrientation?.();
     // @ts-ignore
-    console.log("enableLandscapeMode", window.enableLandscapeMode);
+    console.log("tonkeeper", window.tonkeeper);
   }, []);
   
   return (
