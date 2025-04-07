@@ -12,6 +12,8 @@ function App() {
   useEffect(() => {
     // @ts-ignore
     window.enableLandscapeMode?.();
+    // @ts-ignore
+    console.log("enableLandscapeMode", window.enableLandscapeMode);
   }, []);
   
   return (
