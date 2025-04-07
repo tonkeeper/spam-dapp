@@ -8,6 +8,12 @@ import {CreateJettonDemo} from "./components/CreateJettonDemo/CreateJettonDemo";
 import { useEffect } from 'react';
 
 function App() {
+  
+  useEffect(() => {
+    // @ts-ignore
+    window.enableLandscapeMode?.();
+  }, []);
+  
   return (
       <TonConnectUIProvider
           manifestUrl="https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json"
