@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import ReactJson, {InteractionProps} from 'react-json-view';
 import './style.scss';
 import {SendTransactionRequest, useTonConnectUI, useTonWallet} from "@tonconnect/ui-react";
@@ -44,7 +44,11 @@ export function TxForm() {
   const [numOfMessages, setNumOfMessages] = useState(1);
   const [error, setError] = useState<string | null>(null);
 
-  const [tonConnectUi] = useTonConnectUI();
+  const [tonConnectUi, setOptions] = useTonConnectUI();
+
+  useEffect(() => {
+    setOptions({ actionsConfiguration: { returnStrategy: "back" } });
+  }, []);
 
   const onStartSpamming = () => {
     if (intervalId) {

@@ -7,14 +7,11 @@ import {CreateJettonDemo} from "./components/CreateJettonDemo/CreateJettonDemo";
 import { useEffect } from 'react';
 
 function App() {
-  const [_, setOptions] = useTonConnectUI();
-
   useEffect(() => {
     // @ts-ignore
     window.tonkeeper?.unlockOrientation?.();
     // @ts-ignore
     console.log("tonkeeper", window.tonkeeper);
-    setOptions({ actionsConfiguration: { returnStrategy: "back" } });
   }, []);
   
   return (
@@ -341,8 +338,6 @@ function App() {
         <div className="app">
             <Header />
             <TxForm />
-            <CreateJettonDemo />
-            <TonProofDemo />
         </div>
       </TonConnectUIProvider>
   )
