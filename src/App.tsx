@@ -1,19 +1,20 @@
 import './App.scss'
-import {THEME, TonConnectUIProvider} from "@tonconnect/ui-react";
+import {THEME, TonConnectUIProvider, useTonConnectUI} from "@tonconnect/ui-react";
 import {Header} from "./components/Header/Header";
 import {TxForm} from "./components/TxForm/TxForm";
-import {Footer} from "./components/Footer/Footer";
 import {TonProofDemo} from "./components/TonProofDemo/TonProofDemo";
 import {CreateJettonDemo} from "./components/CreateJettonDemo/CreateJettonDemo";
 import { useEffect } from 'react';
 
 function App() {
-  
+  const [_, setOptions] = useTonConnectUI();
+
   useEffect(() => {
     // @ts-ignore
     window.tonkeeper?.unlockOrientation?.();
     // @ts-ignore
     console.log("tonkeeper", window.tonkeeper);
+    setOptions({ actionsConfiguration: { returnStrategy: "back" } });
   }, []);
   
   return (
@@ -342,7 +343,6 @@ function App() {
             <TxForm />
             <CreateJettonDemo />
             <TonProofDemo />
-            <Footer />
         </div>
       </TonConnectUIProvider>
   )
